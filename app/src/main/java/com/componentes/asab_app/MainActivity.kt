@@ -10,16 +10,33 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.componentes.asab_app.data.cto.SongCTO
+import com.componentes.asab_app.data.dto.SongDTO
 import com.componentes.asab_app.ui.theme.Asab_appTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        /*
+        val songCTO = SongCTO()
+        val songDTO = SongDTO(
+            "",
+            "Where is my mind",
+            "Lorem Ipsum"
+        )
+
+
+        val band = songCTO.newSong(songDTO)
+        println(band)
+        */
+
+
         setContent {
             Asab_appTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                    Greeting("Android!")
                 }
             }
         }
