@@ -1,6 +1,7 @@
 package com.componentes.asab_app
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,14 +11,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.data.dto.SongDTO
 import com.componentes.asab_app.ui.theme.Asab_appTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    var data  = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //Guardar un nuevo Registro
         /*
         val songCTO = SongCTO()
         val songDTO = SongDTO(
@@ -36,7 +41,8 @@ class MainActivity : ComponentActivity() {
             Asab_appTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android!")
+                    //Greeting("Android!")
+                    Greeting(data)
                 }
             }
         }

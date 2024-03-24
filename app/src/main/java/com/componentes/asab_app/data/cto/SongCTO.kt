@@ -2,11 +2,13 @@ package com.componentes.asab_app.data.cto
 
 import com.componentes.asab_app.data.config.FirebaseSingleton
 import com.componentes.asab_app.data.dto.SongDTO
-import com.componentes.asab_app.tools.Tools
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.google.firebase.firestore.QuerySnapshot
 
 class SongCTO {
-    private val util = Tools()
+
     /**
      * Esta funcion tiene la finalidad de Guardar una cancion en la coleccion de Song
      */
@@ -24,6 +26,4 @@ class SongCTO {
             true
         }catch (e:FirebaseFirestoreException){false}
     }
-
-
 }
