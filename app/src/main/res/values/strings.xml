@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Asab_app</string>
+    <string name="title_activity_save_song">SaveSongActivity</string>
 </resources>
