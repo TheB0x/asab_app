@@ -15,7 +15,7 @@
         <activity
             android:name=".SaveSongActivity"
             android:exported="false"
-            android:label="@string/title_activity_save_song"
+            android:label="Sample"
             android:theme="@style/Theme.Asab_app" />
         <activity
             android:name=".MainActivity"

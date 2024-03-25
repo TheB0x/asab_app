@@ -5,8 +5,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.History
+//import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -101,7 +102,7 @@ fun SearchComponent(){
             Row(modifier = Modifier.padding(14.dp)) {
                 Icon(
                     modifier = Modifier.padding(end = 10.dp),
-                    imageVector = Icons.Default.History,
+                    imageVector = Icons.Default.Add,
                     contentDescription = "History Icon")
 
                 Text(text = it)

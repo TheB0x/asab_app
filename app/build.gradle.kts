@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -47,6 +48,9 @@ android {
 }
 
 dependencies {
+    //More Icons
+    implementation("androidx.compose.material:material-icons-extended")
+
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
@@ -63,4 +67,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // Firebase Implementation
+    implementation("com.google.firebase:firebase-firestore-ktx:24.11.0")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+
+    // Dependencia para la leer los PropertiesMembers de una instancia.
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
 }
