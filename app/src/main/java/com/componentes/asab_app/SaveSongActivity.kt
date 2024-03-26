@@ -5,13 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import com.componentes.asab_app.screens.SaveFormView
 
 class SaveSongActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            SaveFormView()
+            //SaveFormView()
         }
     }
 }
@@ -21,5 +22,5 @@ class SaveSongActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewForm() {
-    SaveFormView()
+    //SaveFormView(navController = NavController)
 }

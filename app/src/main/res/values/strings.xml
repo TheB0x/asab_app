@@ -2,5 +2,7 @@
     <string name="app_name">Asab_app</string>
     <string name="save_lyrics">Guardar Letra</string>
     <string name="training_maraca">Práctica Maraca</string>
-    <string name="training_tambor">Práctica Tambor</string>
+    <string name="training_drum">Práctica Tambor</string>
+    <string name="back">Regresar</string>
+    <string name="save">Guardar</string>
 </resources>

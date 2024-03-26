@@ -5,8 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.History
 //import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -18,13 +18,50 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import com.componentes.asab_app.navigation.Screen
 import com.componentes.asab_app.ui.theme.Primary
 import com.componentes.asab_app.ui.theme.Secondary
 
 @Composable
-fun ButtonComponent(value: String){
+fun ButtonNavComponent(value: String, navController: NavController, route: String){
     Button(
-        onClick = {},
+        onClick = {
+            navController.navigate(route = route ){
+                popUpTo(route){
+                    inclusive = true
+                }
+            }
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(48.dp),
+        contentPadding = PaddingValues(),
+        colors = ButtonDefaults.buttonColors(Color.Transparent)
+    ){
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(48.dp)
+                .background(
+                    brush = Brush.horizontalGradient(listOf(Secondary, Primary)),
+                    shape = RoundedCornerShape(50.dp)
+                ),
+            contentAlignment = Alignment.Center
+        ){
+            Text(
+                text = value,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
+
+@Composable
+fun ButtonSaveComponent(value: String, navController: NavController, onClick: ()->Unit){
+    Button(
+        onClick = onClick,
         modifier = Modifier
             .fillMaxWidth()
             .heightIn(48.dp),
@@ -102,7 +139,7 @@ fun SearchComponent(){
             Row(modifier = Modifier.padding(14.dp)) {
                 Icon(
                     modifier = Modifier.padding(end = 10.dp),
-                    imageVector = Icons.Default.Add,
+                    imageVector = Icons.Default.History,
                     contentDescription = "History Icon")
 
                 Text(text = it)

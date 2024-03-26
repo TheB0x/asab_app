@@ -1,12 +1,10 @@
 package com.componentes.asab_app.screens
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -16,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -24,14 +21,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.componentes.asab_app.R
-import com.componentes.asab_app.components.ButtonComponent
-import com.componentes.asab_app.components.SearchComponent
+import com.componentes.asab_app.components.ButtonNavComponent
+import com.componentes.asab_app.components.ButtonSaveComponent
 import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.data.dto.SongDTO
+import com.componentes.asab_app.navigation.Screen
 
 @Composable
-fun SaveFormView(){
+fun SaveFormView(navController: NavController){
     var name by remember { mutableStateOf("") }
     var lyrics by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -68,17 +67,42 @@ fun SaveFormView(){
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(
-            onClick = {
+        Spacer(modifier = Modifier.height(25.dp))
+        Column {
+            /*Button(
+                onClick = {
+                    val song = SongDTO(id, name, lyrics)
+                    if(SongCTO().newSong(song)){
+                        Toast.makeText(
+                            context,
+                            "Cancion Guardada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }else{
+                        Toast.makeText(
+                            context,
+                            "Error al Guardar la cancion",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        name = ""
+                        lyrics = ""
+                    }
+                }
+            ) {
+                Text(text = stringResource(R.string.save))
+            }*/
+            ButtonSaveComponent(
+                stringResource(R.string.save),
+                navController = navController
+            ) {
                 val song = SongDTO(id, name, lyrics)
-                if(SongCTO().newSong(song)){
+                if (SongCTO().newSong(song)) {
                     Toast.makeText(
                         context,
                         "Cancion Guardada",
                         Toast.LENGTH_SHORT
                     ).show()
-                }else{
+                } else {
                     Toast.makeText(
                         context,
                         "Error al Guardar la cancion",
@@ -88,8 +112,12 @@ fun SaveFormView(){
                     lyrics = ""
                 }
             }
-        ) {
-            Text(text = "Guardar")
+
+            Spacer(Modifier.height(40.dp))
+
+            ButtonNavComponent(stringResource(R.string.back), navController = navController, Screen.Home.route)
+
         }
+
     }
 }
