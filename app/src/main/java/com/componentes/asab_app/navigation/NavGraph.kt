@@ -30,7 +30,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.Maraca.route
         ){
-            DrumScreen(navController = navController)
+            MaracaScreen(navController = navController)
         }
 
         composable(

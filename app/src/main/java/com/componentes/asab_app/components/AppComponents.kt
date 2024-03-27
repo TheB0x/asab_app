@@ -1,8 +1,11 @@
 package com.componentes.asab_app.components
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -15,16 +18,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.componentes.asab_app.data.config.FirebaseSingleton
+import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.navigation.Screen
 import com.componentes.asab_app.ui.theme.Primary
 import com.componentes.asab_app.ui.theme.Secondary
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.firestore
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import androidx.compose.foundation.clickable
+
 
 @Composable
 fun ButtonNavComponent(value: String, navController: NavController, route: String){
+
+    val data = remember { mutableStateListOf<String>() }
+    LaunchedEffect(Unit) {
+        SongCTO().getDataFromFirestore(data)
+    }
+
     Button(
         onClick = {
             navController.navigate(route = route ){
@@ -89,61 +111,74 @@ fun ButtonSaveComponent(value: String, navController: NavController, onClick: ()
 
 
 //Search Field without conection to database//
-@OptIn(ExperimentalMaterial3Api::class)
+
 @Composable
 fun SearchComponent(){
+    /*
+
 
     var text by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
     var items = remember {
-        mutableStateListOf("")
+        //mutableStateListOf("Where is my mind", "Funky Town")
+        data
     }
 
-    SearchBar(
-        modifier = Modifier.fillMaxWidth(),
-        query = text,
-        onQueryChange = {
-            text = it
-        },
-        onSearch = {
-            items.add(text)
-            active = false
-            text = ""
-        },
-        active = active,
-        onActiveChange = {
-            active = it
-        },
-        placeholder = {
-            Text(text = "Buscar")
-        },
-        leadingIcon = {
-            Icon(imageVector = Icons.Default.Search, contentDescription = "Search Icon")
-        },
-        trailingIcon = {
-            if (active) {
-                Icon(
-                    modifier = Modifier.clickable {
-                        if (text.isNotEmpty()){
-                            text = ""
-                        }else{
-                            active = false
-                        }
-                    },
-                    imageVector = Icons.Default.Clear,
-                    contentDescription = "Close Icon")
-            }
-        }
-    ){
-        items.forEach{
-            Row(modifier = Modifier.padding(14.dp)) {
-                Icon(
-                    modifier = Modifier.padding(end = 10.dp),
-                    imageVector = Icons.Default.History,
-                    contentDescription = "History Icon")
+ */
+    val context = LocalContext.current
+    val data = remember { mutableStateListOf<String>() }
+    LaunchedEffect(Unit) {
+        SongCTO().getDataFromFirestore(data)
+    }
 
-                Text(text = it)
+    SearchableTextField(data) { itemName ->
+
+        // Aqui se puede incorporar la lógica para la vista del detalle de la canción
+        Toast.makeText(context, itemName,Toast.LENGTH_SHORT).show()
+    }
+}
+
+@Composable
+fun SearchableTextField(data: List<String>, onItemClick: (String) -> Unit) {
+    var searchText by remember { mutableStateOf(TextFieldValue()) }
+    var searchResults by remember { mutableStateOf(data) } // Inicialmente muestra todos los datos
+
+    Column {
+        TextField(
+            value = searchText,
+            onValueChange = {
+                searchText = it
+                searchResults = filterData(data, it.text)
+            },
+            label = { Text("Buscar") },
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn {
+            items(searchResults) { item ->
+                Text(
+                    text = item,
+                    modifier = Modifier
+                        .padding(16.dp)
+                        .clickable { onItemClick(item) }
+                )
             }
         }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose { }
+    }
+}
+
+fun filterData(data: List<String>, query: String): List<String> {
+    return if (query.isEmpty()) {
+        data // Si la consulta está vacía, devuelve todos los datos
+    } else {
+        data.filter { it.contains(query, ignoreCase = true) }
     }
 }

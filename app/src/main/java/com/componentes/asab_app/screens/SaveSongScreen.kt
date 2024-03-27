@@ -95,29 +95,50 @@ fun SaveFormView(navController: NavController){
                 stringResource(R.string.save),
                 navController = navController
             ) {
-                val song = SongDTO(id, name, lyrics)
-                if (SongCTO().newSong(song)) {
+                // Valida que los campos tengan datos
+                if(name.isNotEmpty() && lyrics.isNotEmpty()){
+
+                    // Crea el objeto Song
+                    val song = SongDTO(id, name, lyrics)
+
+                    // Crea el registro y la función retorna un Boolean. Registro guardado = true
+                    if (SongCTO().newSong(song)) {
+                        Toast.makeText(
+                            context,
+                            "Cancion Guardada",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        name = ""
+                        lyrics = ""
+
+                        // Regresa a la vista principal
+                        navController.navigate(route = Screen.Home.route ){
+                            popUpTo(Screen.Home.route){
+                                inclusive = true
+                            }
+                        }
+                    } else {
+                        Toast.makeText(
+                            context,
+                            "Error al Guardar la cancion",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }else{
                     Toast.makeText(
                         context,
-                        "Cancion Guardada",
+                        "Complete todos los campos",
                         Toast.LENGTH_SHORT
                     ).show()
-                } else {
-                    Toast.makeText(
-                        context,
-                        "Error al Guardar la cancion",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    name = ""
-                    lyrics = ""
                 }
             }
-
             Spacer(Modifier.height(40.dp))
-
-            ButtonNavComponent(stringResource(R.string.back), navController = navController, Screen.Home.route)
-
+            ButtonNavComponent(
+                stringResource(R.string.back),
+                navController = navController,
+                Screen.Home.route
+            )
         }
-
     }
 }
