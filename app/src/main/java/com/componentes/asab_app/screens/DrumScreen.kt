@@ -1,10 +1,9 @@
 package com.componentes.asab_app.screens
 
-import android.content.Context
-import android.media.MediaPlayer
+import android.media.AudioAttributes
+import android.media.SoundPool
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import com.componentes.asab_app.R
 import androidx.compose.material3.Text
@@ -21,9 +20,11 @@ import com.componentes.asab_app.navigation.Screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.componentes.asab_app.ui.theme.Primary
+import com.componentes.asab_app.ui.theme.Secondary
 
 @Composable
 fun DrumScreen(navController: NavController){
@@ -39,9 +40,11 @@ private fun instructions(
     navController: NavController
 ){
     var startTraining by remember { mutableStateOf(true) }
-    Column {
+    Column (Modifier.padding(horizontal = 35.dp)){
         if (startTraining) {
-            Text(text = "Drum Screen")
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth().padding(bottom = 35.dp)){
+                Text(text = stringResource(R.string.intructions_drum))
+            }
 
             ButtonSaveComponent(stringResource(R.string.start_drum), navController) {
                 startTraining = !startTraining
@@ -60,12 +63,32 @@ private fun instructions(
 @Composable
 fun touchBox(){
     val context = LocalContext.current
-    val snare: MediaPlayer = MediaPlayer.create(context, R.raw.snare)
+    val snareBuilder = remember { createdSound() }
+    val snareId = remember { snareBuilder.load(context, R.raw.snare, 1) }
+    var color by remember {mutableStateOf(Primary)}
     Box(
         modifier = Modifier
             .height(750.dp)
-            .background(color = Primary)
+            .background(color = color)
             .fillMaxWidth()
-            .clickable { snare.start() }
+            .pointerInput(Unit){
+                detectTapGestures(onTap = {
+                    snareBuilder.play(snareId, 1f, 1f, 1, 0, 1f)
+                    color = if (color == Primary) Secondary else Primary
+                })
+            }
     )
+}
+
+fun createdSound(): SoundPool {
+    val attributes = AudioAttributes
+        .Builder()
+        .setUsage(AudioAttributes.USAGE_GAME)
+        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+        .build()
+    return SoundPool.Builder()
+        .setMaxStreams(6)
+        .setAudioAttributes(attributes)
+        .build()
+
 }
