@@ -6,4 +6,5 @@
     <string name="back">Regresar</string>
     <string name="save">Guardar</string>
     <string name="start_drum">Comenzar</string>
+    <string name="start_maraca">Comenzar</string>
 </resources>
