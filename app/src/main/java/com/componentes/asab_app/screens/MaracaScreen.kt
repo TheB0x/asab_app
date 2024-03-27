@@ -94,12 +94,11 @@ fun ShakeDetectionScreen() {
     }
 
     BackHandler {
-        // Cleanup sound pool when back button is pressed
+        // Limpiar el Pool cuando se presiona el botón de regresar
         soundPool.release()
     }
-
+    Spacer(modifier = Modifier.height(25.dp))
     Text(text = "Sacude tu telefono")
-
 }
 
 
