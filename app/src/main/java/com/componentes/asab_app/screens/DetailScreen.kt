@@ -3,6 +3,8 @@ package com.componentes.asab_app.screens
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -20,6 +22,8 @@ import androidx.navigation.NavController
 import com.componentes.asab_app.R
 import com.componentes.asab_app.components.ButtonNavComponent
 import com.componentes.asab_app.components.ButtonSaveComponent
+import com.componentes.asab_app.components.textContent
+import com.componentes.asab_app.components.textTitle
 import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.navigation.Screen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,10 +38,16 @@ fun DetailScreen(navController: NavController, keyParam : String){
             .padding(35.dp)
             .fillMaxWidth()
     ){
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            Text(text = keyParam, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            textTitle(keyParam)
             Spacer(modifier = Modifier.padding(vertical = 35.dp))
-            lyrics(keyParam)
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .weight(weight = 1f, fill = false)
+            ) {
+                lyrics(keyParam)
+            }
             Spacer(modifier = Modifier.padding(vertical = 35.dp))
             ButtonSaveComponent(stringResource(id = R.string.delete), navController){
 
@@ -68,7 +78,7 @@ fun lyrics(keyParam: String){
     }
 
     for (doc in data){
-        Text(doc)
+        textContent(doc)
     }
 }
 

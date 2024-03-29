@@ -2,9 +2,13 @@ package com.componentes.asab_app.screens
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -25,6 +29,8 @@ import androidx.navigation.NavController
 import com.componentes.asab_app.R
 import com.componentes.asab_app.components.ButtonNavComponent
 import com.componentes.asab_app.components.ButtonSaveComponent
+import com.componentes.asab_app.components.textContent
+import com.componentes.asab_app.components.textTitle
 import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.data.dto.SongDTO
 import com.componentes.asab_app.navigation.Screen
@@ -41,32 +47,41 @@ fun SaveFormView(navController: NavController){
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(35.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            text = "Nueva Cancion",
-            style = TextStyle(fontSize = 24.sp)
+        textTitle(
+            text = stringResource(R.string.title_save_song_title)
         )
         Spacer(modifier = Modifier.height(32.dp))
-        TextField(
+        OutlinedTextField(
             value = name,
             onValueChange = {name = it},
-            label = { Text(text = "Ingrese el nombre de la Cancion") },
+            shape = RoundedCornerShape(50.dp),
+            label = { textContent(text = stringResource(R.string.label_save_song_name)) },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            modifier = Modifier.fillMaxWidth()
 
         )
         Spacer(modifier = Modifier.height(16.dp))
-        TextField(
-            value = lyrics,
-            onValueChange = {lyrics = it},
-            label = { Text(text = "Ingrese la letra de la Cancion") },
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
-        )
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .weight(weight = 1f, fill = false)
+        ) {
+            OutlinedTextField(
+                value = lyrics,
+                onValueChange = {lyrics = it},
+                shape = RoundedCornerShape(50.dp),
+                label = { textContent(text = stringResource(R.string.label_save_song_lyric)) },
+                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+                keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
         Spacer(modifier = Modifier.height(25.dp))
         Column {
             /*Button(

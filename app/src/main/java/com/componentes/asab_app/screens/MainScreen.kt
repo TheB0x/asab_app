@@ -21,7 +21,7 @@ fun MainScreen(navController: NavController){
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
-            .padding(35.dp)
+            .padding(horizontal = 35.dp, vertical = 50.dp)
     ) {
         Column {
             ButtonNavComponent(stringResource(id = R.string.save_lyrics), navController, Screen.SaveSong.route)

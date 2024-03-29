@@ -34,12 +34,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.componentes.asab_app.components.textTitle
 import com.componentes.asab_app.ui.theme.Primary
 
 @Composable
 fun MaracaScreen(navController: NavController){
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(35.dp),
         contentAlignment = Alignment.Center,
     ){
         instructions(navController)
@@ -50,12 +53,12 @@ private fun instructions(
     navController: NavController
 ){
     var startTraining by remember { mutableStateOf(true) }
-    Column {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         if (startTraining) {
-            Text(
-                text = "Maraca Screen",
-                fontSize = 32.sp,
-                textAlign = TextAlign.Center
+            textTitle(
+                text = stringResource(R.string.welcome_maraca)
             )
             Spacer(modifier = Modifier.height(25.dp))
             ButtonSaveComponent(stringResource(R.string.start_maraca), navController) {
@@ -98,7 +101,9 @@ fun ShakeDetectionScreen() {
         soundPool.release()
     }
     Spacer(modifier = Modifier.height(25.dp))
-    Text(text = "Sacude tu telefono")
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) { textTitle(text = stringResource(R.string.detail_maraca)) }
 }
 
 
@@ -148,8 +153,8 @@ fun createSoundPool(): SoundPool {
 fun playSound(soundPool: SoundPool, soundId: Int, level: Int){
     val volume = when (level){
         in 1..3 -> 0.4f
-        in 4..6 -> 1.0f
-        else -> 2.0f
+        in 4..6 -> 10.0f
+        else -> 20.0f
     }
     soundPool.play(soundId, volume, volume, 1, 0, 1f)
 }
