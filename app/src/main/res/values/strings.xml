@@ -10,4 +10,5 @@
         Práctica Tambor \n Para comenzar toque el boton "Comenzar", luego de eso presione en la zona de color.
     </string>
     <string name="start_maraca">Comenzar</string>
+    <string name="delete">Eliminar</string>
 </resources>

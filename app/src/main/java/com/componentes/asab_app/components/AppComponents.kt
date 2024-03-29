@@ -1,17 +1,12 @@
 package com.componentes.asab_app.components
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.History
 //import androidx.compose.material.icons.filled.History
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -24,19 +19,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.componentes.asab_app.data.config.FirebaseSingleton
 import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.navigation.Screen
 import com.componentes.asab_app.ui.theme.Primary
 import com.componentes.asab_app.ui.theme.Secondary
-import com.google.firebase.Firebase
-import com.google.firebase.FirebaseApp
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.firestore
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import androidx.compose.foundation.clickable
 
 
 @Composable
@@ -113,7 +99,7 @@ fun ButtonSaveComponent(value: String, navController: NavController, onClick: ()
 //Search Field without conection to database//
 
 @Composable
-fun SearchComponent(){
+fun SearchComponent(navController: NavController, route: Screen.Detail){
     /*
 
 
@@ -131,10 +117,15 @@ fun SearchComponent(){
         SongCTO().getDataFromFirestore(data)
     }
 
-    SearchableTextField(data) { itemName ->
+    SearchableTextField(data) {
+        //Navigate to detail
+        itemName ->
+        navController.navigate(route = route.passkeyValue(itemName)){
+            popUpTo(route.passkeyValue(itemName)){
+                inclusive = true
+            }
+        }
 
-        // Aqui se puede incorporar la lógica para la vista del detalle de la canción
-        Toast.makeText(context, itemName,Toast.LENGTH_SHORT).show()
     }
 }
 

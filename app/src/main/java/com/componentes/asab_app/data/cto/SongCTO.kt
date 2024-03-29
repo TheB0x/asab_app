@@ -1,12 +1,11 @@
 package com.componentes.asab_app.data.cto
 
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 import com.componentes.asab_app.data.config.FirebaseSingleton
 import com.componentes.asab_app.data.dto.SongDTO
 import com.google.android.gms.tasks.Task
-import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -43,5 +42,36 @@ class SongCTO {
             // Manejar el fallo
         }
     }
+
+    @ExperimentalCoroutinesApi
+    fun getDetailData(data: MutableList<String>, name:String){
+        val collection = FirebaseSingleton.getInstance().collection("song")
+        collection
+            .whereEqualTo("name", name)
+            .get().addOnSuccessListener {
+                querySnapshot -> for (document in querySnapshot){
+                document.getString("lyrics")?.let { data.add(it) }
+            }
+        }.addOnFailureListener { exception -> "error"}
+    }
+
+    fun deleteSong(name: String): Boolean{
+
+        return try {
+            FirebaseSingleton
+                .getInstance()
+                .collection("song")
+                .whereEqualTo("name", name)
+                .get()
+                .addOnSuccessListener { querySnapshots ->
+                for (document in querySnapshots){
+                    document.reference.delete()
+                }
+            }
+            true
+        }catch (e:FirebaseFirestoreException){false}
+
+    }
+
 
 }

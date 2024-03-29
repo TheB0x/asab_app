@@ -30,7 +30,7 @@ fun MainScreen(navController: NavController){
             Spacer(modifier = Modifier.height(40.dp))
             ButtonNavComponent(stringResource(id = R.string.training_drum), navController, Screen.Drum.route)
             Spacer(modifier = Modifier.height(50.dp))
-            SearchComponent()
+            SearchComponent(navController, Screen.Detail)
         }
     }
 
