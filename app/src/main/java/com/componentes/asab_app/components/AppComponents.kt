@@ -28,6 +28,7 @@ import com.componentes.asab_app.navigation.Screen
 import com.componentes.asab_app.ui.theme.Primary
 import com.componentes.asab_app.ui.theme.Roboto
 import com.componentes.asab_app.ui.theme.Secondary
+import java.util.Base64
 
 
 @Composable
@@ -119,7 +120,8 @@ fun SearchComponent(navController: NavController, route: Screen.Detail){
     SearchableTextField(data) {
         //Navigate to detail
         itemName ->
-        navController.navigate(route = route.passkeyValue(itemName)){
+        val encodedkeyItem = Base64.getEncoder().encodeToString(itemName.toByteArray())
+        navController.navigate(route = route.passkeyValue(encodedkeyItem)){
             popUpTo(route.passkeyValue(itemName)){
                 inclusive = true
             }

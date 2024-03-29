@@ -27,26 +27,27 @@ import com.componentes.asab_app.components.textTitle
 import com.componentes.asab_app.data.cto.SongCTO
 import com.componentes.asab_app.navigation.Screen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.Base64
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @Composable
 fun DetailScreen(navController: NavController, keyParam : String){
     val context = LocalContext.current
-
+    val decodeKeyParam = String(Base64.getDecoder().decode(keyParam))
     Box(
         modifier = Modifier
             .padding(35.dp)
             .fillMaxWidth()
     ){
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            textTitle(keyParam)
+            textTitle(decodeKeyParam)
             Spacer(modifier = Modifier.padding(vertical = 35.dp))
             Column(
                 modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .weight(weight = 1f, fill = false)
             ) {
-                lyrics(keyParam)
+                lyrics(decodeKeyParam)
             }
             Spacer(modifier = Modifier.padding(vertical = 35.dp))
             ButtonSaveComponent(stringResource(id = R.string.delete), navController){
