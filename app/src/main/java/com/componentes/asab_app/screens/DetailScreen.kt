@@ -52,7 +52,7 @@ fun DetailScreen(navController: NavController, keyParam : String){
             Spacer(modifier = Modifier.padding(vertical = 35.dp))
             ButtonSaveComponent(stringResource(id = R.string.delete), navController){
 
-                if (SongCTO().deleteSong(keyParam)){
+                if (SongCTO().deleteSong(decodeKeyParam)){
                     Toast.makeText(context, "Cancion eliminada con Exito",Toast.LENGTH_SHORT).show()
                     navController.navigate(route = Screen.Home.route){
                         popUpTo(Screen.Home.route){

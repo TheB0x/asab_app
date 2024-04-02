@@ -18,7 +18,7 @@
     <string name="detail_maraca">Sacude tu telefono</string>
 
     <string name="label_save_song_name">Ingrese el nombre de la Cancion</string>
-    <string name="label_save_song_lyric">Ingrese el nombre de la Cancion</string>
+    <string name="label_save_song_lyric">Ingrese la letra de la Cancion</string>
     <string name="title_save_song_title">Nueva Cancion</string>
 
 </resources>
